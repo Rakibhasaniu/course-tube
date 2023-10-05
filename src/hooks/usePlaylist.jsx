@@ -3,54 +3,35 @@ import getPlaylist from "../api/Api";
 
 const usePlaylist = () => {
     const [state, setState] = useState({
-        playLists: {},
+        playlists: {},
         recentPlaylists: [],
         favorites: [],
-        error: '',
-        loading: false,
+
     })
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const getPlaylistById = async (playlistId, force = false) => {
-        if (state.playLists[playlistId] && !force) {
+        if (state.playlists[playlistId] && !force) {
             return;
         }
         setLoading(true)
-        let result;
+
         try {
-            result = await getPlaylist(playlistId)
-            setError('')
+            const playlist = await getPlaylist(playlistId)
+            setError('');
+            setState((prev) => ({
+                ...prev,
+                playlists: {
+                    ...prev.playlists,
+                    [playlistId]: playlist
+                }
+            }))
         } catch (e) {
             setError(e.response?.data?.error?.message || 'Something Went wrong')
         } finally {
             setLoading(false)
         }
-        // let cid, ct;
-        // result = result.map(item => {
-        //     const { channelId, title, description, thumbnails: { medium }, channelTitle, } = item.snippet;
-        //     if (!cid) {
-        //         cid = channelId;
-        //     }
-        //     if (!ct) {
-        //         ct = channelTitle;
-        //     }
-        //     return {
-        //         title, description, thumbnail: medium,
-        //         contentDetails: item.contentDetails
-        //     }
-        // })
-        setState(prev => ({
-            ...prev,
-            playLists: {
-                ...prev.playLists,
-                [playlistId]: {
-                    items: result,
-                    playlistId: playlistId,
-                    channelId: cid,
-                    channelTitle: ct,
-                }
-            }
-        }))
+
     }
     const addToFavorite = (playlistId) => {
         setState(prev => ({
@@ -74,7 +55,7 @@ const usePlaylist = () => {
         return ids.map(id => state.playLists[id])
     }
     return {
-        playLists: state.playLists,
+        playLists: state.playlists,
         favorites: getPlaylistsByIds(state.favorites),
         recentPlaylists: getPlaylistsByIds(state.recentPlaylists),
         getPlaylistById,

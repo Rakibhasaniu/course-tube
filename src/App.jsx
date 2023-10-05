@@ -1,29 +1,28 @@
-import { useEffect } from "react";
-import getPlaylist from "./api/Api";
 import usePlaylist from "./hooks/usePlaylist";
 import { CssBaseline } from "@mui/material";
 import Navbar from "./components/Navbar/Navbar";
+import Cards from "./components/card/Cards";
+import Container from '@mui/material/Container';
+
+
 
 
 const App = () => {
-    // const { getPlaylistById, playLists, error, loading } = usePlaylist();
-    // useEffect(() => {
-    //     getPlaylistById('PL_XxuZqN0xVBPhR5bjBIKyBjTo8pK99gN')
-    // }, [])
-    // console.log('Playlist', playLists)
-    // console.log('Error', error)
-    // console.log('Loading', loading)
-    // console.log(playLists)
+
     const { playLists, error, getPlaylistById } = usePlaylist()
-    console.log(playLists)
-    console.log(error)
+    // console.log(playLists)
+    // console.log(error)
+    const playlistArray = Object.values(playLists)
     return (
         <>
             <CssBaseline />
-            <div>
-
+            <Container maxWidth={'lg'} sx={{ marginTop: 14 }}>
                 <Navbar getPlaylistById={getPlaylistById} />
-            </div>
+                {playlistArray.length > 0 && (
+
+                    playlistArray.map((item) => <Cards key={item.id} playlistThumbnail={item.playlistThumbnail} playlistTitle={item.playlistTitle} channelTitle={item.channelTitle} />)
+                )}
+            </Container>
         </>
     )
 }

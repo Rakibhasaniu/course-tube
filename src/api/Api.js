@@ -1,46 +1,39 @@
 import axios from "axios";
-const KEY = `AIzaSyDg4W7y1x8GJ_AQFjiw6scBWT9kScQzCsg`;
+
+const key = `AIzaSyDg4W7y1x8GJ_AQFjiw6scBWT9kScQzCsg`;
 
 const getPlaylistItem = async (playlistId, pageToken = "", result = []) => {
-  const URL = `https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet%2CcontentDetails&maxResults=50&playlistId=${playlistId}&key=${KEY}&pageToken=${pageToken}`;
+  const URL = `https://www.googleapis.com/youtube/v3/playlistItems?key=${key}&part=id,contentDetails,snippet&maxResults=50&playlistId=${playlistId}&pageToken=${pageToken}`;
 
   const { data } = await axios.get(URL);
-  // console.log(data);
+  result = [...result, ...data.items];
   if (data.nextPageToken) {
-    result = await getPlaylist(playlistId, data.nextPageToken, [
-      ...result,
-      ...data.items,
-    ]);
+    result = getPlaylistItem(playlistId, data.nextPageToken, result);
   }
   return result;
 };
+
 const getPlaylist = async (playlistId) => {
-  const URl = `https://youtube.googleapis.com/youtube/v3/playlists?part=snippet&id=${playlistId}&key=${KEY}`;
+  const URL = `https://youtube.googleapis.com/youtube/v3/playlists?part=snippet&id=${playlistId}&key=${key}`;
+
   const { data } = await axios.get(URL);
   let playlistItems = await getPlaylistItem(playlistId);
+
   const {
-    channelId,
     title: playlistTitle,
     description: playlistDescription,
     thumbnails,
+    channelId,
     channelTitle,
   } = data?.items[0]?.snippet;
-  // let cid, ct;
 
   playlistItems = playlistItems.map((item) => {
     const {
-      // channelId,
       title,
       description,
       thumbnails: { medium },
-      // channelTitle,
     } = item.snippet;
-    // if (!cid) {
-    //   cid = channelId;
-    // }
-    // if (!ct) {
-    //   ct = channelTitle;
-    // }
+
     return {
       title,
       description,
@@ -48,6 +41,7 @@ const getPlaylist = async (playlistId) => {
       contentDetails: item.contentDetails,
     };
   });
+
   return {
     playlistId,
     playlistTitle,
