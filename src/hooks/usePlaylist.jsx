@@ -25,20 +25,20 @@ const usePlaylist = () => {
         } finally {
             setLoading(false)
         }
-        let cid, ct;
-        result = result.map(item => {
-            const { channelId, title, description, thumbnails: { medium }, channelTitle, } = item.snippet;
-            if (!cid) {
-                cid = channelId;
-            }
-            if (!ct) {
-                ct = channelTitle;
-            }
-            return {
-                title, description, thumbnail: medium,
-                contentDetails: item.contentDetails
-            }
-        })
+        // let cid, ct;
+        // result = result.map(item => {
+        //     const { channelId, title, description, thumbnails: { medium }, channelTitle, } = item.snippet;
+        //     if (!cid) {
+        //         cid = channelId;
+        //     }
+        //     if (!ct) {
+        //         ct = channelTitle;
+        //     }
+        //     return {
+        //         title, description, thumbnail: medium,
+        //         contentDetails: item.contentDetails
+        //     }
+        // })
         setState(prev => ({
             ...prev,
             playLists: {
