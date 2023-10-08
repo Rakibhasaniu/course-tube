@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 const Cards = ({ playlistThumbnail, playlistTitle, channelTitle }) => {
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card sx={{ height: '100%' }}>
 
             <CardMedia
                 component="img"
@@ -20,7 +20,7 @@ const Cards = ({ playlistThumbnail, playlistTitle, channelTitle }) => {
             />
             <CardContent>
                 <Typography variant="h6" color="text.primary">
-                    {playlistTitle}
+                    {`${playlistTitle.length > 50 ? playlistTitle.substr(0, 50) + '...' : playlistTitle}`}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                     {channelTitle}
