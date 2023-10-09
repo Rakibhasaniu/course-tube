@@ -5,12 +5,13 @@ import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import { PlayCircleFilled } from '@mui/icons-material';
 import Button from '@mui/material/Button';
+import { Box, Stack } from '@mui/material';
 
 
 const Cards = ({ playlistThumbnail, playlistTitle, channelTitle }) => {
 
     return (
-        <Card sx={{ height: '100%' }}>
+        <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', margin: 1 }}>
 
             <CardMedia
                 component="img"
@@ -26,10 +27,14 @@ const Cards = ({ playlistThumbnail, playlistTitle, channelTitle }) => {
                     {channelTitle}
                 </Typography>
             </CardContent>
+            <Box sx={{ flexGrow: 1 }}></Box>
             <CardActions disableSpacing>
                 <Button>
-                    <PlayCircleFilled />
-                    Play
+                    <Stack direction={'row'} spacing={1} alignItems={'center '}>
+                        <PlayCircleFilled />
+                        <Typography variant='body2' fontWeight={600}>StART</Typography>
+                    </Stack>
+
                 </Button>
 
             </CardActions>

@@ -16,9 +16,9 @@ const App = () => {
                 <Navbar getPlaylistById={getPlaylistById} />
                 {playlistArray.length > 0 && (
 
-                    <Grid container gap={2}>
+                    <Grid container >
                         {playlistArray.map((item) => (
-                            <Grid item xs={12} md={6} lg={4} >
+                            <Grid item xs={12} md={6} lg={4} mb={2} >
 
                                 <Cards key={item.id} playlistThumbnail={item.playlistThumbnail} playlistTitle={item.playlistTitle} channelTitle={item.channelTitle} />
                             </Grid>
