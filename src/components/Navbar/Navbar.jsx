@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import { Button, Container, Stack } from '@mui/material';
 import { useState } from 'react';
 import FormDialog from '../playlist-dialog/dialog';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@mui/material/Link'
 
 const Navbar = ({ getPlaylistById }) => {
 
@@ -27,9 +29,12 @@ const Navbar = ({ getPlaylistById }) => {
                 <Container maxWidth={'lg'}>
                     <Toolbar>
                         <Stack spacing={1} sx={{ flexGrow: 1 }}>
-                            <Typography variant="h4" >
-                                Course-Tube
-                            </Typography>
+                            <Link to='/' component={RouterLink} sx={{ textDecoration: 'none', color: 'black' }} >
+                                <Typography variant="h4" >
+                                    Course-Tube
+                                </Typography>
+                            </Link>
+
                             <Typography variant="body1" >
                                 By Rakib Hasan
                             </Typography>

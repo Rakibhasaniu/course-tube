@@ -6,9 +6,10 @@ import Typography from '@mui/material/Typography';
 import { PlayCircleFilled } from '@mui/icons-material';
 import Button from '@mui/material/Button';
 import { Box, Stack } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 
-const Cards = ({ playlistThumbnail, playlistTitle, channelTitle }) => {
+const Cards = ({ playlistThumbnail, playlistTitle, channelTitle, playlistId }) => {
 
     return (
         <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column', margin: 1 }}>
@@ -29,7 +30,7 @@ const Cards = ({ playlistThumbnail, playlistTitle, channelTitle }) => {
             </CardContent>
             <Box sx={{ flexGrow: 1 }}></Box>
             <CardActions disableSpacing>
-                <Button>
+                <Button to={`/player/${playlistId}`} component={Link}>
                     <Stack direction={'row'} spacing={1} alignItems={'center '}>
                         <PlayCircleFilled />
                         <Typography variant='body2' fontWeight={600}>StART</Typography>
@@ -39,7 +40,7 @@ const Cards = ({ playlistThumbnail, playlistTitle, channelTitle }) => {
 
             </CardActions>
 
-        </Card>
+        </Card >
     );
 }
 export default Cards;

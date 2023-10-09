@@ -1,9 +1,9 @@
 import usePlaylist from "./hooks/usePlaylist";
-import { CssBaseline, Grid, Stack } from "@mui/material";
+import { CssBaseline, Grid, Stack, Typography } from "@mui/material";
 import Navbar from "./components/Navbar/Navbar";
 import Cards from "./components/card/Cards";
 import Container from '@mui/material/Container';
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom'
 
 
 const HomePage = ({ playlistArray }) => {
@@ -15,7 +15,8 @@ const HomePage = ({ playlistArray }) => {
                     {playlistArray.map((item) => (
                         <Grid item xs={12} md={6} lg={4} mb={2} >
 
-                            <Cards key={item.id} playlistThumbnail={item.playlistThumbnail} playlistTitle={item.playlistTitle} channelTitle={item.channelTitle} />
+                            <Cards key={item.playlistId} playlistThumbnail={item.playlistThumbnail} playlistTitle={item.playlistTitle} channelTitle={item.channelTitle}
+                                playlistId={item.playlistId} />
                         </Grid>
 
                     ))}
@@ -23,6 +24,24 @@ const HomePage = ({ playlistArray }) => {
             )}
         </Container>
 
+    )
+}
+
+const NotFound = () => {
+    return (
+        <Container maxWidth={'lg'} sx={{ my: 14 }}>
+            <Typography variant="h2">404 Page Not Found</Typography>
+        </Container>
+    )
+}
+
+const PlayerPage = ({ playlists }) => {
+    const { playlistId } = useParams()
+    console.log(playlists[playlistId])
+    return (
+        <Container maxWidth={'lg'} sx={{ my: 14 }}>
+            <Typography variant="h2">tuuuuuuuuuuuut</Typography>
+        </Container>
     )
 }
 
@@ -36,9 +55,12 @@ const App = () => {
             <Navbar getPlaylistById={getPlaylistById} />
             <Routes>
                 <Route path="/" element={<HomePage playlistArray={playlistArray}></HomePage>} />
+                <Route path="/player/:playlistId" element={<PlayerPage playlists={playLists}></PlayerPage>} />
+                <Route path="*" element={<NotFound></NotFound>} />
             </Routes>
+
         </BrowserRouter>
     );
 };
 
-export default App;
+export default App; 
