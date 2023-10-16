@@ -37,10 +37,12 @@ const NotFound = () => {
 
 const PlayerPage = ({ playlists }) => {
     const { playlistId } = useParams()
-    console.log(playlists[playlistId])
+    const current = playlists[playlistId]
+    if (!current) return;
     return (
         <Container maxWidth={'lg'} sx={{ my: 14 }}>
-            <Typography variant="h2">tuuuuuuuuuuuut</Typography>
+            <Typography variant="h2">{current.playlistTitle}</Typography>
+            <Typography variant="body1">{current.playlistDescription}</Typography>
         </Container>
     )
 }
